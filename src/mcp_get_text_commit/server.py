@@ -4,6 +4,7 @@ MCP Server для Git Commit Intelligence
 Основной FastMCP сервер для анализа git изменений и генерации commit messages.
 """
 
+import logging
 from mcp.server.fastmcp import FastMCP, Context
 from .models import GetTextCommitParams, GetTextCommitResult
 from .commit_text_generator import CommitTextGenerator
@@ -18,6 +19,7 @@ async def get_text_commit(
     params: GetTextCommitParams,
     ctx: Context
 ) -> GetTextCommitResult:
+    logging.info("--- 1. Получен запрос в get_text_commit ---") 
     """
     Анализирует git изменения и генерирует готовый commit message
     в соответствии с Conventional Commits стандартом.

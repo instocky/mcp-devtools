@@ -4,6 +4,7 @@ Core Commit Text Generator
 Основной модуль для объединения всех компонентов генерации commit messages.
 """
 
+import logging
 from typing import Optional
 
 from mcp.server.fastmcp import Context
@@ -23,6 +24,7 @@ class CommitTextGenerator:
         style: str = "conventional",
         logger: Optional[Context] = None
     ) -> GetTextCommitResult:
+        logging.info("--- 2. Внутри CommitTextGenerator.generate ---")
         """
         Генерирует commit message на основе git изменений
         
@@ -37,6 +39,7 @@ class CommitTextGenerator:
         ctx = logger or _DummyContext()
         
         try:
+
             await ctx.info("Анализ git изменений...")
 
             if not await GitAnalyzer.is_git_repository(working_directory):
@@ -44,7 +47,10 @@ class CommitTextGenerator:
                 raise ValueError("Not a git repository")
 
             analyzer = GitAnalyzer(working_directory)
+            
+            logging.info("--- 3. Сейчас будет вызван GitAnalyzer ---")
             git_data = await analyzer.collect_git_data()
+            logging.info("--- 4. GitAnalyzer успешно отработал! ---")
 
             if not git_data["staged_files"]:
                 await ctx.warning("Нет staged изменений для коммита")
