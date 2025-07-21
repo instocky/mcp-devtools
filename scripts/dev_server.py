@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 """
 Основной скрипт для запуска MCP Get Text Commit сервера в режиме разработки.
-
-Этот скрипт настраивает логирование и запускает сервер.
-Предполагается, что пакет установлен в режиме редактирования (`pip install -e .`),
-поэтому нет необходимости в манипуляциях с sys.path.
 """
 
 import logging
@@ -15,8 +11,9 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('mcp-dev.log'), # Логи будут сохраняться в файл
-        logging.StreamHandler(sys.stdout)   # и выводиться в консоль
+        logging.FileHandler('mcp-dev.log'),
+        # ИСПРАВЛЕНО: Выводим логи в стандартный поток ошибок (stderr)
+        logging.StreamHandler(sys.stderr)
     ]
 )
 
